@@ -1,5 +1,12 @@
 # VAEText
 
+VAE for mnist and texts
+
+## Main Requirements
+1. Python3
+2. Pytorch 0.4
+3. Matplotlib
+
 
 ### VAE for mnist
 `python main_vae.py`
@@ -16,7 +23,7 @@ Experimental results are in:
 `python main_sentence_vae.py`
 
 Experimental results:
-1. random sampling from `z ~ N(0,1)``
+1. random sampling from `z ~ N(0,1)`
 2. reconstruct by mean
 3. reconstruct by sample1
 4. reconstruct by sample2
