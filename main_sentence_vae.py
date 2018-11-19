@@ -19,7 +19,7 @@ if __name__ == '__main__':
     device = torch.device("cuda:1" if use_cuda else "cpu")
 
     batch_size = 500
-    learning_rate = 0.01
+    learning_rate = 0.005
     lr_decay =  0.05
     word_keep_rate = 0.5 # word dropout, 1.0 == no word dropout
 
