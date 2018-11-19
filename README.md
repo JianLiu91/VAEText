@@ -9,7 +9,7 @@ VAE for mnist and texts
 
 
 ### VAE for mnist
-`python main_vae.py`
+Run `python main_vae.py`
 
 Experimental results are in:
 1. `out/_true` ground-truth examples
@@ -19,10 +19,10 @@ Experimental results are in:
 5. `out/_rand` random sampling from `z ~ N(0, 1)`
 
 
-### VAE for text
-Train on a samples of BookCorpus. run `python main_sentence_vae.py`
+### VAE for generating sentences
+Train on a samples of BookCorpus. Run `python main_sentence_vae.py`
 
-Experimental results are:
+Experimental results contain:
 1. Generated random samples from `z ~ N(0,1)`
 2. Samples reconstructed from mean
 3. Samples reconstructed by sample1
