@@ -20,11 +20,11 @@ Experimental results are in:
 
 
 ### VAE for text
-`python main_sentence_vae.py`
+Train on a samples of BookCorpus. run `python main_sentence_vae.py`
 
-Experimental results:
-1. random sampling from `z ~ N(0,1)`
-2. reconstruct by mean
-3. reconstruct by sample1
-4. reconstruct by sample2
-5. interpolating from two sentences
+Experimental results are:
+1. Generated random samples from `z ~ N(0,1)`
+2. Samples reconstructed from mean
+3. Samples reconstructed by sample1
+4. Samples reconstructed by sample2
+5. Interpolations from two sentences
