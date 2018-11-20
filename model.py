@@ -104,7 +104,7 @@ class RNNVAE(nn.Module):
 
     def sample_z(self, mu, log_var, dim=None):
         if dim is None:
-            dim = self.mb_size
+            dim = mu.size(0)
         eps = torch.randn(dim, self.z_dim).to(self.device)
         return mu + torch.exp(log_var / 2) * eps
 

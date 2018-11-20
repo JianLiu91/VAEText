@@ -3,22 +3,23 @@ import torch
 import torch.optim as optim
 import numpy as np
 
+from preprocess import prepare_ptb, prepare_bookcorpus
 from dataset import Dataset
 from model import RNNVAE
+
 
 def logistic(x, x0=5000, k=0.0050):
     return float(1 / (1 + np.exp(-k * (x - x0))))
 
 if __name__ == '__main__':
 
-    x = pickle.load(open("./data/bookcorpus_sample.p", "rb"))
-    train, val, test = x[0], x[1], x[2]
-    word2idx, idx2word = x[3], x[4]
+    train, val, test, word2idx, idx2word = prepare_bookcorpus()
+    train, val, test, word2idx, idx2word = prepare_ptb()
 
     use_cuda = True
     device = torch.device("cuda:0" if use_cuda else "cpu")
 
-    batch_size = 400
+    batch_size = 80
     learning_rate = 0.001
     lr_decay =  0.05
     word_keep_rate = 0.8 # word dropout, 1.0 == no word dropout
@@ -73,7 +74,7 @@ if __name__ == '__main__':
             recon_loss, kl_loss = model(encoder_ipt, decoder_ipt, mask)
 
 
-            x0 = batch_per_epoch * 2  # logistic(x0) == 0.5 there
+            x0 = batch_per_epoch * 4  # logistic(x0) == 0.5 there
             kl_weight = logistic(step, x0)
 
             loss = recon_loss  + kl_loss * kl_weight
