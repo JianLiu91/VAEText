@@ -16,12 +16,12 @@ if __name__ == '__main__':
     word2idx, idx2word = x[3], x[4]
 
     use_cuda = True
-    device = torch.device("cuda:1" if use_cuda else "cpu")
+    device = torch.device("cuda:0" if use_cuda else "cpu")
 
-    batch_size = 500
-    learning_rate = 0.005
+    batch_size = 400
+    learning_rate = 0.001
     lr_decay =  0.05
-    word_keep_rate = 0.5 # word dropout, 1.0 == no word dropout
+    word_keep_rate = 0.8 # word dropout, 1.0 == no word dropout
 
     dataset = Dataset(train, batch_size, word2idx, device)
     batch_per_epoch = int(dataset.index_length / batch_size)
@@ -34,13 +34,13 @@ if __name__ == '__main__':
         'mb_size': batch_size,
 
         'encoder_input_size': 300, # should be equal to emb_dim
-        'encoder_hidden_size': 512,
+        'encoder_hidden_size': 256,
         'encoder_num_layers': 1,
 
-        'z_dim': 256,
+        'z_dim': 128,
 
         'decoder_num_layers': 1,
-        'decoder_hidden_size': 512
+        'decoder_hidden_size': 256
     }
 
 
@@ -64,11 +64,11 @@ if __name__ == '__main__':
             model.train()
             optimizer.zero_grad()
             # word dropout
-            word_dropout_mask = (torch.FloatTensor(decoder_ipt.size()).uniform_() < word_keep_rate).long().to(device)
-            word_dropout_mask_flip = 1 - word_dropout_mask
-            temp = word2idx['<UNK>'] * word_dropout_mask_flip
-            decoder_ipt = decoder_ipt * word_dropout_mask + temp
-            decoder_ipt[:, 0] = word2idx['<BOS>'] # we keep the <BOS> symbol
+            # word_dropout_mask = (torch.FloatTensor(decoder_ipt.size()).uniform_() < word_keep_rate).long().to(device)
+            # word_dropout_mask_flip = 1 - word_dropout_mask
+            # temp = word2idx['<UNK>'] * word_dropout_mask_flip
+            # decoder_ipt = decoder_ipt * word_dropout_mask + temp
+            # decoder_ipt[:, 0] = word2idx['<BOS>'] # we keep the <BOS> symbol
 
             recon_loss, kl_loss = model(encoder_ipt, decoder_ipt, mask)
 

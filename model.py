@@ -122,10 +122,7 @@ class RNNVAE(nn.Module):
         x_reconstructed = self.p(x_dropout_emb, mask, z_example)
 
         recon_loss = sequence_cross_entropy_with_logits(x_reconstructed, x, mask, batch_average=False)
-
-        # transfer the output of sequence_cross_entropy_with_logits to sentence average NLL
-        recon_loss = recon_loss * (mask.sum(1).float() + 1e-13)
-
+        recon_loss = recon_loss * mask.sum(1).float()
         recon_loss = torch.mean(recon_loss)
         kl_loss = torch.mean(0.5 * torch.sum(torch.exp(z_var) + z_mu ** 2 - 1. - z_var, 1))
 
